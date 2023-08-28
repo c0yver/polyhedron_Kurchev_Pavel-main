@@ -32,6 +32,6 @@ try:
         print("%6.2f сек." % (time() - start_draw_time))
         print(f'Сумма площадей равна {poly.sum_area()}')
         input("Hit 'Return' to continue -> ")
-except(EOFError, KeyboardInterrupt):
+except (EOFError, KeyboardInterrupt):
     print("\nStop")
     tk.close()

@@ -5,7 +5,7 @@ from common.tk_drawer import TkDrawer, x, y
 import sys
 try:
     exec(f'from optimize_{sys.argv[1]}.polyedr import Polyedr')
-except(IndexError, ModuleNotFoundError):
+except (IndexError, ModuleNotFoundError):
     print("\nНеобходимо указание варианта оптимизации от 1 до 7, например,\n"
           "    ./run_optimize 1\n"
           "или\n"
@@ -45,6 +45,6 @@ try:
         print("%6.2f сек." % (time() - start_draw_time))
         print(f'Сумма площадей равна {poly.sum_area()}')
         input("Hit 'Return' to continue -> ")
-except(EOFError, KeyboardInterrupt):
+except (EOFError, KeyboardInterrupt):
     print("\nStop")
     tk.close()

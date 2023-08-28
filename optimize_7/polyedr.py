@@ -193,33 +193,31 @@ class Polyedr:
             for vertex in facet.vertexes:
                 if self.is_good_point(vertex.x, vertex.y, vertex.z):
                     k = True
-            if k == True:
+            if k is True:
                 # формула Гауса для площади многоугольника
                 sum1 = 0
                 sum2 = 0
                 for i in range(len(facet.vertexes)-1):
-                    sum1 += facet.vertexes[i].x*facet.vertexes[i+1].y + facet.vertexes[len(facet.vertexes)-1].x*facet.vertexes[0].y
-                    sum2 += facet.vertexes[i+1].x*facet.vertexes[i].y - facet.vertexes[0].x*facet.vertexes[len(facet.vertexes)-1].y
-                
-                # for i in range(len(facet.vertexes)):
-                #     print('---', facet.vertexes[i].x, facet.vertexes[i].y, facet.vertexes[i].z)
+                    sum1 += facet.vertexes[i].x*facet.vertexes[i+1].y \
+                        + facet.vertexes[len(facet.vertexes)-1].x \
+                        * facet.vertexes[0].y
+                    sum2 += facet.vertexes[i+1].x*facet.vertexes[i].y \
+                        - facet.vertexes[0].x \
+                        * facet.vertexes[len(facet.vertexes)-1].y
 
                 n_ver = facet.vertexes[t].cross(facet.vertexes[t-1])
                 p_ver = R3(n_ver.x, n_ver.y, 0.0)
-
-                corner = (n_ver.dot(p_ver))/(sqrt(n_ver.x*n_ver.x + n_ver.y*n_ver.y + n_ver.z*n_ver.z) \
-                    *sqrt(p_ver.x*p_ver.x + p_ver.y*p_ver.y + p_ver.z*p_ver.z))
+                x1, y1, z1 = n_ver.x, n_ver.y, n_ver.z
+                x2, y2, z2 = p_ver.x, p_ver.y, p_ver.z
+                corner = (n_ver.dot(p_ver)) / \
+                    (sqrt(x1*x1 + y1*y1 + z1*z1) * sqrt(x2*x2 + y2*y2 + z2*z2))
                 corner = sqrt(1 - corner*corner)
-
-                # print(sum1, sum2, corner)
 
                 if corner == 0:
                     area = 0.5*(abs(sum1 - sum2)/(self.c*self.c))
                 else:
-                    area = (0.5*(abs(sum1 - sum2)/(self.c*self.c)))/corner 
+                    area = (0.5*(abs(sum1 - sum2)/(self.c*self.c)))/corner
 
-                # area = (facet.vertexes[1] - facet.vertexes[0]).cross(facet.vertexes[2] - facet.vertexes[0]) + \
-                #  (facet.vertexes[1] - facet.vertexes[3]).cross(facet.vertexes[2] - facet.vertexes[3])
                 self.sum += area
             k = False
 
